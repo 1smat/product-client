@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import classes from './ProductCars.module.scss'
 import axios from 'axios';
 
@@ -18,12 +18,12 @@ const ProductCard = () => {
 			let sub = window.location.hostname.split('.')[0]
 			setSubdomain(window.location.hostname.split('.')[0])
 
-
-			axios.get("http://localhost:3000/products", {
+			// https://minimal-product-server.onrender.com
+			axios.get("https://minimal-product-server.onrender.com/products", {
 				params: { sub }
 			}).then(res => res.data)
-				.then((data: { data: IProduct[], message: string }) => {
-					setProducts(data.data)
+				.then(async (data: IProduct[]) => {
+					setProducts(data)
 				},)
 		}, []
 	)
@@ -31,22 +31,23 @@ const ProductCard = () => {
 	return (
 		<div className={classes.wrapper}>
 			{
-				products.map(
-					(product) => {
-						return <div className={classes.card}>
-							<h3 className={classes.subdomain}>Client - Subdomain : {subdomain}</h3>
-							<p className={classes.id}>id: {product._id}</p>
-							<h1 className={classes.title}> {product.title}  </h1>
-							<h2 className={classes.desc}> {product.desc} </h2>
-							<h3 className={classes.message}>
-								<span
-									className={classes.server}
-								>Server - </span>
-								{product.message}
-							</h3>
-						</div>
-					}
-				)
+				products?.length > 0 ?
+					products?.map(
+						(product: IProduct) => {
+							return <div className={classes.card} key={product.title}>
+								<h3 className={classes.subdomain}>Client - Subdomain : {subdomain}</h3>
+								<p className={classes.id}>id: {product._id}</p>
+								<h1 className={classes.title}> {product.title}  </h1>
+								<h2 className={classes.desc}> {product.desc} </h2>
+								<h3 className={classes.message}>
+									<span
+										className={classes.server}
+									>Server - </span>
+									{product.message}
+								</h3>
+							</div>
+						}
+					) : <></>
 			}
 		</div>
 
