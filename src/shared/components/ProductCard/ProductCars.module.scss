@@ -1,0 +1,20 @@
+.wrapper {
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+	.card {
+		border: 2px solid white;
+		padding: 20px;
+		border-radius: 12px;
+
+		.server {
+			color: green;
+		}
+		.subdomain {
+			color: rgb(6, 46, 188);
+		}
+		.message {
+			color: rgb(255, 255, 255);
+		}
+	}
+}
